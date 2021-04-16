@@ -59,19 +59,39 @@ def addGPU(result):
     datastore_client.put(gpu_task)
 
 
+
+def fetchGPUByName(search):
+    query = datastore_client.query(kind='Name')
+    query.add_filter("Name", "=", search)
+    gpus = query.fetch()
+    return gpus
+
+def fetchGPUAll():
+    query = datastore_client.query(kind='Name')
+    query.order = ["-Name"]
+    gpus = query.fetch()
+    return gpus
+
+
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def save():
     #claims = getClientInfo()
     result = request.form
-    addGPU(result)
-
-    return render_template('index.html')#,user_data=claims
+    res = fetchGPUByName(result['name'])
+    gpus = fetchGPUAll()
+    if sum(1 for _ in res) ==0:
+        addGPU(result)
+        err=""
+    else:
+        err="GPU already exists"
+    return render_template('index.html',error=err, gpus=gpus)#,user_data=claims
 
 @app.route('/')
 def root():
-     return render_template('index.html')#,user_data=claims
+     gpus = fetchGPUAll()
+     return render_template('index.html', gpus=gpus)#,user_data=claims
 
 
 if __name__ == '__main__':
