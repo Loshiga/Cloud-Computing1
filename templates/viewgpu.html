@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+ <title>Datastore and Firebase Auth Example</title>
+ <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+<link type="text/css" rel="stylesheet"
+href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+ <script src="{{ url_for('static', filename='script.js') }}"></script>
+ <link type="text/css" rel="stylesheet" href="{{ url_for('static',
+filename='style.css') }}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="nav" id="nav">
+  <input type="checkbox" id="nav-check">
+  <div class="nav-header">
+    <div class="nav-title">
+      GPU DataBase
+    </div>
+  </div>
+  <div class="nav-btn">
+    <label for="nav-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+
+  <div class="nav-links">
+    <a id="sign-out" hidden="true">Sign out</a>
+  </div>
+</div>
+   <div id="firebase-auth-container"></div>
+   <div id="login-info" hidden="true">
+    {% if user_data %}
+      <p>Hi <b>{{ user_data['name'] }} ( {{ user_data['email'] }} )</b></p>
+    {% endif %}
+   </div>
+   <div class="container">
+   <h2>{{ gpuname }} Specigications</h2>
+   {% for gpu in gpus %}
+
+      {% if gpu['key']['name'] == gpuname %}
+
+       <label >Name:</label>
+       <p>{{ gpu['Name'] }}</p>
+
+       <label >Manufacturer:</label>
+       <p>{{ gpu['Manufacturer'] }}</p>
+
+       <label >Date Issued:</label>
+       <p>{{ gpu['DateIss'] }}</p>
+
+       <label >GeometryShader:</label>
+       <p>{{ gpu['GeometryShader'] }}</p>
+
+       <label >TesselationShader:</label>
+       <p>{{ gpu['TesselationShader'] }}</p>
+
+       <label >ShaderInt16:</label>
+       <p>{{ gpu['ShaderInt16'] }}</p>
+
+       <label >SparseBinding:</label>
+       <p>{{ gpu['SparseBinding'] }}</p>
+
+       <label >TextureCompressionETC2:</label>
+       <p>{{ gpu['TextureCompressionETC2'] }}</p>
+
+       <label >VertexPipelineStoresAndAtomics:</label>
+       <p>{{ gpu['VertexPipelineStoresAndAtomics'] }}</p>
+
+       {% endif %}
+   {% endfor %}
+    </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+<script src="{{ url_for('static', filename='app-setup.js') }}"></script>
+
+</html>

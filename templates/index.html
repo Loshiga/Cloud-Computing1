@@ -97,7 +97,10 @@ filename='style.css') }}">
 
             {% for gpu in gpus %}
               <tr>
-                <td>{{ gpu['Name'] }}</td>
+                <td>
+                  <a href="/viewgpu?name={{ gpu['Name'] }}">{{ gpu['Name'] }}</a>
+
+                </td>
               </tr>
             {% endfor %}
            {% endif %}

@@ -88,6 +88,14 @@ def save():
         err="GPU already exists"
     return render_template('index.html',error=err, gpus=gpus)#,user_data=claims
 
+
+@app.route('/viewgpu')
+def viewGPU():
+    result = request.args
+    res = fetchGPUByName(result['name'])
+    return render_template('viewgpu.html', gpus=res, gpuname=result['name'])
+
+
 @app.route('/')
 def root():
      gpus = fetchGPUAll()
